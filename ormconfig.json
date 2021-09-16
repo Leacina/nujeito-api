@@ -3,8 +3,8 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "123456",
-    "database": "gooficial",
+    "password": "",
+    "database": "",
     "entities": [
         "./src/modules/**/infra/typeorm/entities/*.ts"
     ]
