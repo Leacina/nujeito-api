@@ -19,20 +19,25 @@ export default class CreateUsers1632100870499 implements MigrationInterface {
           },
           {
             name: 'email',
-            type: 'varchar',
+            type: 'varchar(100)',
             isUnique: true,
           },
           {
             name: 'senha',
-            type: 'varchar',
+            type: 'varchar(50)',
           },
           {
             name: 'telefone',
-            type: 'varchar',
+            type: 'varchar(20)',
           },
           {
             name: 'cpf',
-            type: 'varchar',
+            type: 'varchar(20)',
+          },
+          {
+            name: 'is_logista_nujeito',
+            type: 'boolean',
+            default: false,
           },
           {
             name: 'created_at',

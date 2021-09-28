@@ -24,8 +24,8 @@ export default class CreateUserService {
       nome: yup.string().required('Nome do usuário não informado'),
       senha: yup.string().required('Senha do usuário não informada'),
       email: yup.string().required('E-mail do usuário não informado'),
-      // telefone: yup.string().required('Telefone do usuário não informado'),
-      // cpf: yup.string().required('CPF do usuário não informado'),
+      telefone: yup.string().required('Telefone do usuário não informado'),
+      cpf: yup.string().required('CPF do usuário não informado'),
     });
 
     // Caso houver algum erro retorna com status 422
