@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import * as yup from 'yup';
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   nome: string;
@@ -10,6 +11,8 @@ interface IRequest {
   senha: string;
   telefone: string;
   cpf: string;
+  is_logista_nujeito: boolean;
+  id_estabelecimento?: number;
 }
 
 @injectable()
@@ -17,6 +20,9 @@ export default class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('BCryptHashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute(data: IRequest): Promise<User> {
@@ -33,6 +39,10 @@ export default class CreateUserService {
       throw new AppError(err.message, 422);
     });
 
+    // if (data.is_logista_nujeito && data.id_estabelecimento <= 0) {
+    //   throw new AppError('Usuário logista sem uma loja informada', 422);
+    // }
+
     // Busca se tem algum usuário com o mesmo e-mail
     const checkUniqueEmail = await this.usersRepository.findByEmail(data.email);
 
@@ -40,6 +50,9 @@ export default class CreateUserService {
     if (checkUniqueEmail) {
       throw new AppError('Já possui um usuário com o e-mail informado!', 400);
     }
+
+    // eslint-disable-next-line no-param-reassign
+    data.senha = await this.hashProvider.generateHash(data.senha);
 
     const user = await this.usersRepository.create(data);
 

@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUsers1632100870499 implements MigrationInterface {
+export default class CreateEstablishment1633282548998
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'usuario',
+        name: 'estabelecimento',
         columns: [
           {
             name: 'id',
@@ -15,29 +16,28 @@ export default class CreateUsers1632100870499 implements MigrationInterface {
           },
           {
             name: 'nome',
-            type: 'varchar',
+            type: 'varchar(50)',
           },
           {
-            name: 'email',
+            name: 'cnpj',
+            type: 'varchar(20)',
+            isNullable: true,
+          },
+          {
+            name: 'uf',
+            type: 'varchar(2)',
+          },
+          {
+            name: 'cidade',
+            type: 'varchar(50)',
+          },
+          {
+            name: 'bairro',
+            type: 'varchar(50)',
+          },
+          {
+            name: 'logradouro',
             type: 'varchar(100)',
-            isUnique: true,
-          },
-          {
-            name: 'senha',
-            type: 'varchar(600)',
-          },
-          {
-            name: 'telefone',
-            type: 'varchar(20)',
-          },
-          {
-            name: 'cpf',
-            type: 'varchar(20)',
-          },
-          {
-            name: 'is_logista_nujeito',
-            type: 'boolean',
-            default: false,
           },
           {
             name: 'created_at',
@@ -55,6 +55,6 @@ export default class CreateUsers1632100870499 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('usuario');
+    await queryRunner.dropTable('estabelecimento');
   }
 }

@@ -6,8 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('usuario')
-class User {
+@Entity('estabelecimento')
+class Establishment {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -15,22 +15,19 @@ class User {
   nome: string;
 
   @Column()
-  email: string;
+  cnpj: string;
 
   @Column()
-  senha: string;
+  uf: string;
 
   @Column()
-  cpf: string;
+  cidade: string;
 
   @Column()
-  telefone: string;
+  bairro: string;
 
   @Column()
-  is_logista_nujeito: boolean;
-
-  @Column()
-  id_estabelecimento: number;
+  logradouro: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -39,4 +36,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Establishment;
