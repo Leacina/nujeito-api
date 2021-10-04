@@ -9,7 +9,7 @@ export default class CreateFKUserEstablishment1633283738336
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
-      'usuario',
+      'tb_usuario',
       new TableColumn({
         name: 'id_estabelecimento',
         type: 'int',
@@ -18,11 +18,11 @@ export default class CreateFKUserEstablishment1633283738336
     );
 
     await queryRunner.createForeignKey(
-      'usuario',
+      'tb_usuario',
       new TableForeignKey({
         name: 'UsuarioEstabelecimentoFK',
         columnNames: ['id_estabelecimento'],
-        referencedTableName: 'estabelecimento',
+        referencedTableName: 'tb_estabelecimento',
         referencedColumnNames: ['id'],
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
@@ -31,8 +31,8 @@ export default class CreateFKUserEstablishment1633283738336
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('usuario', 'UsuarioEstabelecimentoFK');
+    await queryRunner.dropForeignKey('tb_usuario', 'UsuarioEstabelecimentoFK');
 
-    await queryRunner.dropColumn('usuario', 'id_estabebelecimento');
+    await queryRunner.dropColumn('tb_usuario', 'id_estabebelecimento');
   }
 }

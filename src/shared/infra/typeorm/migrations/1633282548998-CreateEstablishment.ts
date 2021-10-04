@@ -5,7 +5,7 @@ export default class CreateEstablishment1633282548998
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'estabelecimento',
+        name: 'tb_estabelecimento',
         columns: [
           {
             name: 'id',
@@ -55,6 +55,6 @@ export default class CreateEstablishment1633282548998
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('estabelecimento');
+    await queryRunner.dropTable('tb_estabelecimento');
   }
 }

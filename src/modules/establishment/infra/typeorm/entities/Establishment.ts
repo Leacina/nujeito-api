@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('estabelecimento')
+@Entity('tb_estabelecimento')
 class Establishment {
   @PrimaryGeneratedColumn('increment')
   id: number;

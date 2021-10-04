@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import Establishment from '@modules/establishment/infra/typeorm/entities/Establishment';
 
-@Entity('produto')
+@Entity('tb_produto')
 class Product {
   @PrimaryGeneratedColumn('increment')
   id: number;

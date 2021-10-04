@@ -10,7 +10,7 @@ export default class CreateTableProduto1633284546609
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'produto',
+        name: 'tb_produto',
         columns: [
           {
             name: 'id',
@@ -63,11 +63,11 @@ export default class CreateTableProduto1633284546609
     );
 
     await queryRunner.createForeignKey(
-      'produto',
+      'tb_produto',
       new TableForeignKey({
         name: 'ProdutoEstabecimentoFK',
         columnNames: ['id_estabelecimento'],
-        referencedTableName: 'estabelecimento',
+        referencedTableName: 'tb_estabelecimento',
         referencedColumnNames: ['id'],
         onUpdate: 'CASCADE',
       }),
@@ -75,6 +75,6 @@ export default class CreateTableProduto1633284546609
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('produto');
+    await queryRunner.dropTable('tb_produto');
   }
 }
