@@ -32,6 +32,18 @@ class User {
   @Column()
   id_estabelecimento: number;
 
+  @Column()
+  uf: string;
+
+  @Column()
+  cidade: string;
+
+  @Column()
+  bairro: string;
+
+  @Column()
+  logradouro: string;
+
   @CreateDateColumn()
   created_at: Date;
 

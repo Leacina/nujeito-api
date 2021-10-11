@@ -31,8 +31,6 @@ export default class CreateFKUserEstablishment1633283738336
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('tb_usuario', 'UsuarioEstabelecimentoFK');
-
-    await queryRunner.dropColumn('tb_usuario', 'id_estabebelecimento');
+    await queryRunner.dropForeignKey('tb_usuario', 'id_estabelecimento');
   }
 }

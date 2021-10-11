@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUsers1632100870499 implements MigrationInterface {
+export default class CreateTableProduct1633284546609
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'tb_usuario',
+        name: 'tb_produto',
         columns: [
           {
             name: 'id',
@@ -15,45 +16,28 @@ export default class CreateUsers1632100870499 implements MigrationInterface {
           },
           {
             name: 'nome',
-            type: 'varchar',
+            type: 'varchar(200)',
           },
           {
-            name: 'email',
-            type: 'varchar(100)',
+            name: 'valor',
+            type: 'decimal',
+          },
+          {
+            name: 'qt_estoque',
+            type: 'int',
+          },
+          {
+            name: 'qt_fracionado',
+            type: 'int',
+          },
+          {
+            name: 'codigo_barras',
+            type: 'bigint',
             isUnique: true,
           },
           {
-            name: 'senha',
-            type: 'varchar(600)',
-          },
-          {
-            name: 'telefone',
-            type: 'varchar(20)',
-          },
-          {
-            name: 'cpf',
-            type: 'varchar(20)',
-          },
-          {
-            name: 'is_logista_nujeito',
-            type: 'boolean',
-            default: false,
-          },
-          {
-            name: 'uf',
+            name: 'tp_embalagem',
             type: 'varchar(2)',
-          },
-          {
-            name: 'cidade',
-            type: 'varchar(50)',
-          },
-          {
-            name: 'bairro',
-            type: 'varchar(50)',
-          },
-          {
-            name: 'logradouro',
-            type: 'varchar(100)',
           },
           {
             name: 'created_at',
@@ -71,6 +55,6 @@ export default class CreateUsers1632100870499 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tb_usuario');
+    await queryRunner.dropTable('tb_produto');
   }
 }

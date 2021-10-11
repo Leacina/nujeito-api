@@ -5,12 +5,12 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export default class CreateTableProduto1633284546609
+export default class CreateTableShop1633878679003
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'tb_produto',
+        name: 'tb_loja',
         columns: [
           {
             name: 'id',
@@ -25,28 +25,7 @@ export default class CreateTableProduto1633284546609
           },
           {
             name: 'nome',
-            type: 'varchar(200)',
-          },
-          {
-            name: 'valor',
-            type: 'decimal',
-          },
-          {
-            name: 'qt_estoque',
-            type: 'int',
-          },
-          {
-            name: 'qt_fracionado',
-            type: 'int',
-          },
-          {
-            name: 'codigo_barras',
-            type: 'bigint',
-            isUnique: true,
-          },
-          {
-            name: 'tp_embalagem',
-            type: 'varchar(2)',
+            type: 'varchar(100)',
           },
           {
             name: 'created_at',
@@ -63,9 +42,9 @@ export default class CreateTableProduto1633284546609
     );
 
     await queryRunner.createForeignKey(
-      'tb_produto',
+      'tb_loja',
       new TableForeignKey({
-        name: 'ProdutoEstabecimentoFK',
+        name: 'LojaEstabelecimentoIDFK',
         columnNames: ['id_estabelecimento'],
         referencedTableName: 'tb_estabelecimento',
         referencedColumnNames: ['id'],
@@ -75,6 +54,6 @@ export default class CreateTableProduto1633284546609
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tb_produto');
+    await queryRunner.dropTable('tb_loja');
   }
 }

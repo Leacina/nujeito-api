@@ -13,6 +13,10 @@ interface IRequest {
   cpf: string;
   is_logista_nujeito: boolean;
   id_estabelecimento?: number;
+  uf: string;
+  cidade: string;
+  bairro: string;
+  logradouro: string;
 }
 
 @injectable()
@@ -32,6 +36,10 @@ export default class CreateUserService {
       email: yup.string().required('E-mail do usuário não informado'),
       telefone: yup.string().required('Telefone do usuário não informado'),
       cpf: yup.string().required('CPF do usuário não informado'),
+      uf: yup.string().required('UF não informada'),
+      cidade: yup.string().required('Cidade não informada'),
+      bairro: yup.string().required('Bairro não informado'),
+      logradouro: yup.string().required('Logradouro não informado'),
     });
 
     // Caso houver algum erro retorna com status 422

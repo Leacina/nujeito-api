@@ -12,6 +12,10 @@ export default class UsersController {
       telefone,
       is_logista_nujeito,
       id_estabelecimento,
+      uf,
+      cidade,
+      bairro,
+      logradouro,
     } = request.body;
 
     const createUserService = container.resolve(CreateUserService);
@@ -23,6 +27,10 @@ export default class UsersController {
       cpf,
       is_logista_nujeito,
       id_estabelecimento,
+      uf,
+      cidade,
+      bairro,
+      logradouro,
     });
 
     return response.json(user);
