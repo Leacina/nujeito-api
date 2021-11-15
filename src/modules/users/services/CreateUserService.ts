@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IEstablishmentsRepository from '../../establishment/repositories/IEstablishmentsRepository';
 
 interface IRequest {
   nome: string;
@@ -27,6 +28,9 @@ export default class CreateUserService {
 
     @inject('BCryptHashProvider')
     private hashProvider: IHashProvider,
+
+    @inject('EstablishmentsRepository')
+    private establishmentsRepository: IEstablishmentsRepository,
   ) {}
 
   public async execute(data: IRequest): Promise<User> {
@@ -47,9 +51,20 @@ export default class CreateUserService {
       throw new AppError(err.message, 422);
     });
 
-    // if (data.is_logista_nujeito && data.id_estabelecimento <= 0) {
-    //   throw new AppError('Usuário logista sem uma loja informada', 422);
-    // }
+    // Verifica se possui um estabalecimento existente
+    if (data.id_estabelecimento) {
+      const establishmentExist = await this.establishmentsRepository.findById(
+        data.id_estabelecimento,
+      );
+
+      if (!establishmentExist) {
+        throw new AppError('Estabelecimento informado não existe', 422);
+      }
+    }
+
+    if (data.is_logista_nujeito && Number(data.id_estabelecimento) <= 0) {
+      throw new AppError('Usuário logista sem uma loja informada', 422);
+    }
 
     // Busca se tem algum usuário com o mesmo e-mail
     const checkUniqueEmail = await this.usersRepository.findByEmail(data.email);
@@ -59,6 +74,8 @@ export default class CreateUserService {
       throw new AppError('Já possui um usuário com o e-mail informado!', 400);
     }
 
+    // eslint-disable-next-line no-param-reassign
+    data.id_estabelecimento = data.id_estabelecimento || null;
     // eslint-disable-next-line no-param-reassign
     data.senha = await this.hashProvider.generateHash(data.senha);
 

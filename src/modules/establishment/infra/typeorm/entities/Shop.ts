@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import Establishment from './Establishment';
 
-Entity('tb_loja');
+@Entity('tb_loja')
 class Shop {
   @PrimaryGeneratedColumn('increment')
   id: number;

@@ -4,7 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+
+import Establishment from '@modules/establishment/infra/typeorm/entities/Establishment';
 
 @Entity('tb_usuario')
 class User {
@@ -31,6 +35,10 @@ class User {
 
   @Column()
   id_estabelecimento: number;
+
+  @ManyToOne(() => Establishment)
+  @JoinColumn({ name: 'id_estabelecimento' })
+  estabelecimento: Establishment;
 
   @Column()
   uf: string;

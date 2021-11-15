@@ -32,6 +32,10 @@ export default class CreateTableProductShopPrice1633882088152
             type: 'decimal',
           },
           {
+            name: 'qt_estoque',
+            type: 'int',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -11,13 +11,18 @@ export default class ShopsRepository implements IShopsRepository {
   }
 
   async find(): Promise<Shop[]> {
-    const shops = await this.ormRepository.find();
+    const shops = await this.ormRepository.find({
+      relations: ['estabelecimento'],
+    });
 
     return shops;
   }
 
   async findById(id: number): Promise<Shop> {
-    const shop = await this.ormRepository.findOne({ where: { id } });
+    const shop = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['estabelecimento'],
+    });
 
     return shop;
   }

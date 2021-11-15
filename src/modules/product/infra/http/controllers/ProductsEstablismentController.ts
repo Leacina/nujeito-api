@@ -1,14 +1,16 @@
 import { Request, Response } from 'express';
-import ListProductsService from '@modules/product/services/ListProductsService';
+import ListProductsEstablishmentService from '@modules/product/services/ListProductsEstablishmentService';
 import { container } from 'tsyringe';
 
 export default class ProductsEstablishmentsController {
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const listProductsService = container.resolve(ListProductsService);
+    const listProductsEstablishmentService = container.resolve(
+      ListProductsEstablishmentService,
+    );
 
-    const products = await listProductsService.execute(Number(id));
+    const products = await listProductsEstablishmentService.execute(Number(id));
 
     return response.json(products);
   }

@@ -17,13 +17,19 @@ export default class EstablishmentsRepository
       where: {
         id,
       },
+      relations: ['lojas'],
     });
 
     return establishment;
   }
 
   async find(): Promise<Establishment[]> {
-    const establishments = await this.ormRepository.find();
+    const establishments = await this.ormRepository.find({
+      relations: ['lojas'],
+      order: {
+        id: 'ASC',
+      },
+    });
 
     return establishments;
   }

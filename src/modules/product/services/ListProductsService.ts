@@ -1,5 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import IResponseList from '@shared/utils/dtos/IResponseList';
+import IFilterRequestList from '@shared/utils/dtos/IFilterRequestList';
+import ListResponse from '@shared/utils/implementations/AppListResponse';
 import IProductsRepository from '../repositories/IProductsRepository';
 
 @injectable()
@@ -10,12 +12,15 @@ export default class ListProductervice {
   ) {}
 
   public async execute(
-    id_estabelecimento: number,
+    filterPage?: IFilterRequestList,
   ): Promise<IResponseList | undefined> {
-    const products = await this.productsRepository.findByEstablishment(
-      id_estabelecimento,
-    );
+    const products = await this.productsRepository.find(filterPage);
 
-    return { hasNext: true, items: products };
+    return new ListResponse(
+      products,
+      filterPage.page,
+      filterPage.pageSize,
+      filterPage.ignorePage,
+    );
   }
 }

@@ -4,10 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
-import Establishment from '@modules/establishment/infra/typeorm/entities/Establishment';
 
 @Entity('tb_produto')
 class Product {
@@ -18,12 +15,6 @@ class Product {
   nome: string;
 
   @Column()
-  valor: number;
-
-  @Column()
-  qt_estoque: number;
-
-  @Column()
   qt_fracionado: number;
 
   @Column()
@@ -31,13 +22,6 @@ class Product {
 
   @Column()
   tp_embalagem: string;
-
-  @ManyToOne(() => Establishment)
-  @JoinColumn({ name: 'id_estabelecimento' })
-  estabelecimento: Establishment;
-
-  @Column()
-  id_estabelecimento: number;
 
   @CreateDateColumn()
   created_at: Date;

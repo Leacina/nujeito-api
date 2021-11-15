@@ -21,6 +21,14 @@ export default class UsersRepository implements IUserRepository {
     return user;
   }
 
+  async findById(id: number): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { id },
+    });
+
+    return user;
+  }
+
   async create(data: ICreateUserDto): Promise<User> {
     const user = this.ormRepository.create(data);
 

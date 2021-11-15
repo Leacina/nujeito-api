@@ -11,18 +11,29 @@ export default class ProductsShopsRepository
     this.ormRepository = getRepository(ProductShop);
   }
 
-  async create(data: ICreateProductShop): Promise<ProductShop> {
+  async create(data: ICreateProductShop[]): Promise<ProductShop[]> {
+    console.log(data);
     const productShop = this.ormRepository.create(data);
     await this.ormRepository.save(productShop);
 
     return productShop;
   }
 
-  async findByLoja(id_loja: number): Promise<ProductShop[]> {
+  async findProductShopById(
+    id_produto: number,
+    id_loja: number,
+  ): Promise<ProductShop> {
+    const productShop = await this.ormRepository.findOne({
+      where: { id_produto, id_loja },
+    });
+
+    return productShop;
+  }
+
+  async findProductsByShop(id_loja: number): Promise<ProductShop[]> {
     const productsShop = await this.ormRepository.find({
-      where: {
-        id_loja,
-      },
+      where: { id_loja },
+      relations: ['produto', 'loja'],
     });
 
     return productsShop;
@@ -44,7 +55,7 @@ export default class ProductsShopsRepository
     return productsShop;
   }
 
-  async save(product: ProductShop): Promise<ProductShop> {
+  async save(product: ProductShop[]): Promise<ProductShop[]> {
     const savedProduct = await this.ormRepository.save(product);
 
     return savedProduct;
