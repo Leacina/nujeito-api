@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export default class CreateTableSalesItem1637003190330
   implements MigrationInterface {
@@ -16,6 +21,10 @@ export default class CreateTableSalesItem1637003190330
           },
           {
             name: 'id_produto',
+            type: 'int',
+          },
+          {
+            name: 'id_venda',
             type: 'int',
           },
           {
@@ -45,6 +54,18 @@ export default class CreateTableSalesItem1637003190330
             default: 'now()',
           },
         ],
+      }),
+    );
+
+    await queryRunner.createForeignKey(
+      'tb_venda_item',
+      new TableForeignKey({
+        name: 'ProdutoVendaFK',
+        columnNames: ['id_venda'],
+        referencedTableName: 'tb_venda',
+        referencedColumnNames: ['id'],
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       }),
     );
   }

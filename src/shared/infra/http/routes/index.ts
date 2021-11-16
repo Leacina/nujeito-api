@@ -5,6 +5,7 @@ import establishmentsRouter from '@modules/establishment/infra/http/routes/estab
 import shopsRouter from '@modules/establishment/infra/http/routes/shops.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import productsRouter from '@modules/product/infra/http/routes/product.routes';
+import salesRouter from '@modules/sales/infra/http/routes/sales.routes';
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use('/api/signin', sessionsRouter);
 routes.use('/api/estabelecimento', establishmentsRouter);
 routes.use('/api/produto', productsRouter);
 routes.use('/api/loja', shopsRouter);
+routes.use('/api/venda', salesRouter);
 
 export default routes;
