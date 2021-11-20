@@ -1,5 +1,4 @@
 import { injectable, inject } from 'tsyringe';
-import IResponseList from '@shared/utils/dtos/IResponseList';
 import IEstablishmentsRepository from '@modules/establishment/repositories/IEstablishmentsRepository';
 import Shop from '@modules/establishment/infra/typeorm/entities/Shop';
 import AppError from '@shared/errors/AppError';
@@ -15,9 +14,7 @@ export default class ListProductervice {
     private establishmentsRepository: IEstablishmentsRepository,
   ) {}
 
-  public async execute(
-    id_establishment: number,
-  ): Promise<IResponseList | undefined> {
+  public async execute(id_establishment: number): Promise<any | undefined> {
     // Busca todas as lojas/frezeer do condominio
     const establishment = await this.establishmentsRepository.findById(
       id_establishment,
@@ -46,18 +43,30 @@ export default class ListProductervice {
         products.push(...productsShop);
       }
     }
-    console.log(products);
+
     // TODO: REVER ISSO
     const productReturn = products
       ? products.map(item => {
           return {
             ...item.produto,
+            id_loja: item.loja.id,
+            loja: item.loja,
             valor: item.valor,
             qt_estoque: item.qt_estoque,
           };
         })
       : [];
 
-    return { hasNext: false, items: productReturn };
+    return {
+      hasNext: false,
+      id_estabelecimento: establishment.id,
+      nome_estabelecimento: establishment.nome,
+      cidade: establishment.cidade,
+      bairro: establishment.bairro,
+      estado: establishment.uf,
+      id_loja: 0,
+      nome_loja: '',
+      items: productReturn,
+    };
   }
 }

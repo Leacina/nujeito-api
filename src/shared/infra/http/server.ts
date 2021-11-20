@@ -6,7 +6,7 @@ import 'express-async-errors';
 import AppError from '@shared/errors/AppError';
 import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
-import swaggerJson from './swagger.json';
+import swaggerJson from './swagger_output.json';
 import routes from './routes';
 
 import '@shared/infra/typeorm';

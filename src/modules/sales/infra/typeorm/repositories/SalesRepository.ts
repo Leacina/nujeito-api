@@ -43,7 +43,7 @@ export class SalesRepository implements ISalesRepository {
           `sales.id_usuario = ${id_usuario} and sales.created_at between '${dataInicial.toISOString()}' and '${dataFinal.toISOString()}'`,
         );
       },
-      relations: ['items'],
+      relations: ['items', 'items.produto'],
     });
 
     return sales;

@@ -1,3 +1,4 @@
+import Product from '@modules/product/infra/typeorm/entities/Product';
 import {
   Entity,
   Column,
@@ -16,6 +17,10 @@ export class SaleItem {
 
   @Column()
   id_produto: number;
+
+  @ManyToOne(() => Product)
+  @JoinColumn({ name: 'id_produto' })
+  produto: Product;
 
   @ManyToOne(() => Sale)
   @JoinColumn({ name: 'id_venda' })

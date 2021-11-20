@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import IResponseList from '@shared/utils/dtos/IResponseList';
+import IShopsRepository from '@modules/establishment/repositories/IShopsRepository';
 import IProductsShopsRepository from '../repositories/IProductsShopsRepository';
 
 @injectable()
@@ -7,10 +7,15 @@ export default class ListProductervice {
   constructor(
     @inject('ProductsShopsRepository')
     private productsRepository: IProductsShopsRepository,
+
+    @inject('ShopsRepository')
+    private shopsRepository: IShopsRepository,
   ) {}
 
-  public async execute(id_loja: number): Promise<IResponseList | undefined> {
+  public async execute(id_loja: number): Promise<any | undefined> {
     const products = await this.productsRepository.findProductsByShop(id_loja);
+
+    const shop = await this.shopsRepository.findById(id_loja);
 
     // TODO: REVER ISSO
     const productReturn = products.map(item => {
@@ -21,6 +26,16 @@ export default class ListProductervice {
       };
     });
 
-    return { hasNext: false, items: productReturn };
+    return {
+      hasNext: false,
+      id_estabelecimento: shop.estabelecimento.id,
+      cidade: shop.estabelecimento.cidade,
+      bairro: shop.estabelecimento.bairro,
+      estado: shop.estabelecimento.uf,
+      nome_estabelecimento: shop.estabelecimento.nome,
+      id_loja: shop.id,
+      nome_loja: shop.nome,
+      items: productReturn,
+    };
   }
 }
