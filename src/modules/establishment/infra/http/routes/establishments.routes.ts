@@ -10,9 +10,10 @@ const establishmentQrCodeController = new EstablishmentQrCodeController();
 const establishmentsRouter = Router();
 
 establishmentsRouter.get('/qrcode/:id', establishmentQrCodeController.index);
+establishmentsRouter.get('/', establishmentsController.show);
 establishmentsRouter.use(ensureAuthenticated);
 establishmentsRouter.post('/', establishmentsController.create);
-establishmentsRouter.get('/', establishmentsController.show);
+establishmentsRouter.put('/:id', establishmentsController.store);
 establishmentsRouter.get('/:id', establishmentsController.index);
 
 export default establishmentsRouter;

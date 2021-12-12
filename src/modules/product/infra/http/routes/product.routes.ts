@@ -15,6 +15,7 @@ const establishmentsRouter = Router();
 
 establishmentsRouter.use(ensureAuthenticated);
 establishmentsRouter.post('/', productsController.create);
+establishmentsRouter.put('/:id', productsController.store);
 establishmentsRouter.get('/', productsController.show);
 establishmentsRouter.get(
   '/estabelecimento/loja/:id',

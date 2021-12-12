@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import CreateEstablishmentService from '@modules/establishment/services/CreateEstablishmentService';
+import UpdateEstablishmentService from '@modules/establishment/services/UpdateEstablishmentService';
 import ListEstablishmentsService from '@modules/establishment/services/ListEstablishmentsService';
 import ListEstablishmentByIdService from '@modules/establishment/services/ListEstablishmentByIdService';
 import { container } from 'tsyringe';
 
 export default class EstablishmentsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { nome, cnpj, uf, cidade, bairro, logradouro } = request.body;
+    const { nome, cnpj, uf, cidade, bairro, logradouro, lojas } = request.body;
 
     const createEstablishmentService = container.resolve(
       CreateEstablishmentService,
@@ -19,6 +20,27 @@ export default class EstablishmentsController {
       cidade,
       bairro,
       logradouro,
+      lojas,
+    });
+
+    return response.json(establishment);
+  }
+
+  public async store(request: Request, response: Response): Promise<Response> {
+    const { nome, cnpj, uf, cidade, bairro, logradouro, lojas } = request.body;
+    const { id } = request.params;
+    const createEstablishmentService = container.resolve(
+      UpdateEstablishmentService,
+    );
+
+    const establishment = await createEstablishmentService.execute(Number(id), {
+      nome,
+      cnpj,
+      uf,
+      cidade,
+      bairro,
+      logradouro,
+      lojas,
     });
 
     return response.json(establishment);

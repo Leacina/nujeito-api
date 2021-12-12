@@ -10,9 +10,23 @@ export default class ShopsRepository implements IShopsRepository {
     this.ormRepository = getRepository(Shop);
   }
 
+  async deleteAllEstablishment(id_estabelecimento: number): Promise<void> {
+    await this.ormRepository.delete({ id_estabelecimento });
+  }
+
   async find(): Promise<Shop[]> {
     const shops = await this.ormRepository.find({
       relations: ['estabelecimento'],
+    });
+
+    return shops;
+  }
+
+  async findAllEstablishment(id_estabelecimento: number): Promise<Shop[]> {
+    const shops = await this.ormRepository.find({
+      where: {
+        id_estabelecimento,
+      },
     });
 
     return shops;

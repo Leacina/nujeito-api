@@ -37,7 +37,7 @@ export default class EstablishmentsRepository
   async create(data: ICreateEstablishmentDTO): Promise<Establishment> {
     const establishment = this.ormRepository.create(data);
 
-    this.ormRepository.save(establishment);
+    await this.ormRepository.save(establishment);
 
     return establishment;
   }

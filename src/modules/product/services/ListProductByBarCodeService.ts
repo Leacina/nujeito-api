@@ -5,6 +5,7 @@ import IProductsRepository from '../repositories/IProductsRepository';
 import IProductsShopsRepository from '../repositories/IProductsShopsRepository';
 
 interface IResponse {
+  id: number;
   nome: string;
   qt_fracionado: number;
   codigo_barras: number;
@@ -50,8 +51,6 @@ export default class ListProductByBarCodeService {
     if (!productShop) {
       throw new AppError('Produto não encontrada na loja.', 422);
     }
-
-    delete product.id;
 
     return {
       ...product,

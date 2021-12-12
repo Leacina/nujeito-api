@@ -16,7 +16,7 @@ interface IRequest {
 }
 
 @injectable()
-export default class CreateEstablishmentService {
+export default class UpdateEstablishmentService {
   constructor(
     @inject('EstablishmentsRepository')
     private establishmentsRepository: IEstablishmentsRepository,
@@ -25,7 +25,10 @@ export default class CreateEstablishmentService {
     private shopsRepository: IShopsRepository,
   ) {}
 
-  public async execute(data: IRequest): Promise<Establishment> {
+  public async execute(
+    id_estabelecimento: number,
+    data: IRequest,
+  ): Promise<Establishment> {
     const schema = yup.object().shape({
       nome: yup.string().required('Nome do usuário não informado'),
       uf: yup.string().required('UF do estabelecimento não informada'),
@@ -40,12 +43,24 @@ export default class CreateEstablishmentService {
       throw new AppError(err.message, 422);
     });
 
-    const establishment = await this.establishmentsRepository.create(data);
+    const establishment = await this.establishmentsRepository.findById(
+      id_estabelecimento,
+    );
 
+    establishment.nome = data.nome;
+    establishment.cnpj = data.cnpj;
+    establishment.uf = data.uf;
+    establishment.cidade = data.cidade;
+    establishment.bairro = data.bairro;
+    establishment.logradouro = data.logradouro;
+
+    await this.establishmentsRepository.save(establishment);
+
+    await this.shopsRepository.deleteAllEstablishment(establishment.id);
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < data.lojas.length; i++) {
       // eslint-disable-next-line no-await-in-loop
-      await this.shopsRepository.create({
+      this.shopsRepository.create({
         nome: data.lojas[i],
         id_estabelecimento: establishment.id,
       });

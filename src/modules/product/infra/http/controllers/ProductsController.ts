@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateProductService } from '@modules/product/services/CreateProductService';
+import { UpdateProductService } from '@modules/product/services/UpdateProductService';
 import ListProductByIdService from '@modules/product/services/ListProductByIdService';
 import ListProductsService from '@modules/product/services/ListProductsService';
 import { container } from 'tsyringe';
@@ -23,6 +24,34 @@ export default class ProductsController {
       tp_embalagem,
       infoLojas,
     });
+
+    return response.json(product);
+  }
+
+  public async store(request: Request, response: Response): Promise<Response> {
+    const {
+      nome,
+      qt_fracionado,
+      codigo_barras,
+      tp_embalagem,
+      infoLojas,
+    } = request.body;
+
+    const { id } = request.params;
+
+    const createProductService = container.resolve(UpdateProductService);
+
+    const product = await createProductService.execute(
+      Number(id),
+      Number(request.user.id),
+      {
+        nome,
+        qt_fracionado: qt_fracionado || 1,
+        codigo_barras,
+        tp_embalagem,
+        infoLojas,
+      },
+    );
 
     return response.json(product);
   }

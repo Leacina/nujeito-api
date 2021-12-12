@@ -12,7 +12,6 @@ export default class ProductsShopsRepository
   }
 
   async create(data: ICreateProductShop[]): Promise<ProductShop[]> {
-    console.log(data);
     const productShop = this.ormRepository.create(data);
     await this.ormRepository.save(productShop);
 
@@ -47,6 +46,17 @@ export default class ProductsShopsRepository
     });
 
     return productsShop;
+  }
+
+  async deleteById(id_produto: number): Promise<void> {
+    await this.ormRepository.delete({ id_produto });
+  }
+
+  async deleteByIdAndShop(id_produto: number, id_loja: number): Promise<void> {
+    await this.ormRepository.delete({
+      id_produto,
+      id_loja,
+    });
   }
 
   async find(): Promise<ProductShop[]> {

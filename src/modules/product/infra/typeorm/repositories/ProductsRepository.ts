@@ -33,8 +33,12 @@ export default class ProductsRepository implements IProductsRepository {
   }
 
   async find({ page, pageSize }: IFilterRequestList): Promise<Product[]> {
-    console.log({ page, pageSize });
+    // const products2 = await this.ormRepository.query(`
+    //   select from tb
+    // `);
+
     const products = await this.ormRepository.find({
+      relations: ['lojas'],
       skip: page ? page - 1 : 0,
       take: pageSize + 1 || 25,
     });
@@ -47,6 +51,7 @@ export default class ProductsRepository implements IProductsRepository {
       where: {
         id,
       },
+      relations: ['lojas', 'lojas.loja', 'lojas.loja.estabelecimento'],
     });
 
     return product;

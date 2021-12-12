@@ -9,6 +9,7 @@ import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 interface IRequest {
   email: string;
   senha: string;
+  loginLogist?: boolean;
 }
 
 interface IResponse {
@@ -26,7 +27,11 @@ class AuthenticateUserService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ email, senha }: IRequest): Promise<IResponse> {
+  public async execute({
+    email,
+    senha,
+    loginLogist,
+  }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -40,6 +45,13 @@ class AuthenticateUserService {
 
     if (!isPasswordMatch) {
       throw new AppError('E-mail ou senha inválido!', 401);
+    }
+
+    if (loginLogist && !user.is_logista_nujeito) {
+      throw new AppError(
+        'Você não tem permissão para acessar esse painel! Entre em contato com o administrador',
+        401,
+      );
     }
 
     const { expiresIn, secret } = authConfig.jwt;

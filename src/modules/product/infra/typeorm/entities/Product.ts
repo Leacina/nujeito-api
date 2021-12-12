@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import ProductShop from './ProductShop';
 
 @Entity('tb_produto')
 class Product {
@@ -22,6 +24,9 @@ class Product {
 
   @Column()
   tp_embalagem: string;
+
+  @OneToMany(() => ProductShop, shop => shop.produto)
+  lojas: ProductShop[];
 
   @CreateDateColumn()
   created_at: Date;

@@ -6,4 +6,6 @@ export default interface IShopsRepository {
   find(): Promise<Shop[]>;
   findById(id: number): Promise<Shop>;
   save(shop: Shop): Promise<Shop>;
+  deleteAllEstablishment(id_estabelecimento: number): Promise<void>;
+  findAllEstablishment(id_estabelecimento: number): Promise<Shop[]>;
 }
