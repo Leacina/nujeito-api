@@ -1,3 +1,5 @@
+import Shop from '@modules/establishment/infra/typeorm/entities/Shop';
+import User from '@modules/users/infra/typeorm/entities/User';
 import {
   Entity,
   Column,
@@ -5,6 +7,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { SaleItem } from './SaleItem';
 
@@ -16,11 +20,25 @@ export class Sale {
   @Column()
   id_usuario: number;
 
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario: User;
+
   @Column()
   id_loja: number;
 
+  @ManyToOne(() => Shop)
+  @JoinColumn({ name: 'id_loja' })
+  loja: Shop;
+
   @OneToMany(() => SaleItem, saleItem => saleItem.venda)
   items: SaleItem[];
+
+  @Column()
+  situacao: string;
+
+  @Column()
+  mensagem_pagamento: string;
 
   @Column()
   valor_total: number;

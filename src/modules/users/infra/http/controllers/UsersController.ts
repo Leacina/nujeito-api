@@ -16,6 +16,8 @@ export default class UsersController {
       uf,
       cidade,
       bairro,
+      rg,
+      cep,
       logradouro,
     } = request.body;
 
@@ -30,6 +32,8 @@ export default class UsersController {
       id_estabelecimento: id_estabelecimento || 0,
       uf,
       cidade,
+      rg,
+      cep,
       bairro,
       logradouro,
     });

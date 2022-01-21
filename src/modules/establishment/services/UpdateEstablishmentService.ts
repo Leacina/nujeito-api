@@ -12,6 +12,9 @@ interface IRequest {
   cidade: string;
   bairro: string;
   logradouro: string;
+  chave_mercado_pago: string;
+  token_mercado_pago: string;
+  taxa: number;
   lojas: string[];
 }
 
@@ -53,10 +56,13 @@ export default class UpdateEstablishmentService {
     establishment.cidade = data.cidade;
     establishment.bairro = data.bairro;
     establishment.logradouro = data.logradouro;
+    establishment.chave_mercado_pago = data.chave_mercado_pago;
+    establishment.token_mercado_pago = data.token_mercado_pago;
+    establishment.taxa = data.taxa;
 
     await this.establishmentsRepository.save(establishment);
 
-    await this.shopsRepository.deleteAllEstablishment(establishment.id);
+    // await this.shopsRepository.deleteAllEstablishment(establishment.id);
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < data.lojas.length; i++) {
       // eslint-disable-next-line no-await-in-loop

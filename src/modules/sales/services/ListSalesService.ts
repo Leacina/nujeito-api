@@ -6,6 +6,7 @@ interface IRequest {
   id_usuario: number;
   dataInicial?: Date;
   dataFinal?: Date;
+  id_estabelecimento?: number;
 }
 
 @injectable()
@@ -16,10 +17,12 @@ export class ListSaleService {
   ) {}
 
   public async execute(data: IRequest): Promise<Sale[]> {
+    console.log(data.id_usuario);
     const sales = await this.salesRepository.findByDate(
       data.id_usuario,
       data.dataInicial,
       data.dataFinal,
+      data.id_estabelecimento,
     );
 
     return sales;

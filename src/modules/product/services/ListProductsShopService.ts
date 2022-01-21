@@ -22,6 +22,9 @@ export default class ListProductervice {
       return {
         ...item.produto,
         valor: item.valor,
+        ds_imagem: item.produto.ds_imagem
+          ? `http://191.252.192.163:3333/api/produto/imagem/${item.produto.ds_imagem}`
+          : '',
         qt_estoque: item.qt_estoque,
       };
     });

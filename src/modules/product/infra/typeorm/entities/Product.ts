@@ -25,6 +25,9 @@ class Product {
   @Column()
   tp_embalagem: string;
 
+  @Column()
+  ds_imagem: string;
+
   @OneToMany(() => ProductShop, shop => shop.produto)
   lojas: ProductShop[];
 

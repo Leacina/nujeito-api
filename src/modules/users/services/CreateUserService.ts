@@ -17,6 +17,8 @@ interface IRequest {
   uf: string;
   cidade: string;
   bairro: string;
+  rg: string;
+  cep: string;
   logradouro: string;
 }
 

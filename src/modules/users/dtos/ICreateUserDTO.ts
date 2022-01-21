@@ -4,6 +4,8 @@ export default interface ICreateUserDto {
   senha: string;
   telefone: string;
   cpf: string;
+  rg: string;
+  cep: string;
   is_logista_nujeito: boolean;
   id_estabelecimento?: number;
   uf: string;

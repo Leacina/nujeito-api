@@ -35,6 +35,9 @@ class ProductShop {
   @Column()
   qt_estoque: number;
 
+  @Column()
+  validade: string;
+
   @CreateDateColumn()
   created_at: Date;
 

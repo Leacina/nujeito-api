@@ -9,6 +9,7 @@ interface IResponse {
   nome: string;
   qt_fracionado: number;
   codigo_barras: number;
+  ds_imagem: string;
   tp_embalagem: string;
   valor: number;
   qt_estoque: number;
@@ -54,6 +55,8 @@ export default class ListProductByBarCodeService {
 
     return {
       ...product,
+      ds_imagem:
+        'https://superprix.vteximg.com.br/arquivos/ids/175207-600-600/Maca-Argentina--1-unidade-aprox.-200g-.png?v=636294203590200000',
       valor: productShop.valor,
       qt_estoque: productShop.qt_estoque,
     };

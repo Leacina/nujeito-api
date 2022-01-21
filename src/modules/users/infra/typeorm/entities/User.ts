@@ -28,6 +28,12 @@ class User {
   cpf: string;
 
   @Column()
+  rg: string;
+
+  @Column()
+  cep: string;
+
+  @Column()
   telefone: string;
 
   @Column()

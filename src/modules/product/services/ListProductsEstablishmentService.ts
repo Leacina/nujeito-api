@@ -51,6 +51,9 @@ export default class ListProductervice {
             ...item.produto,
             id_loja: item.loja.id,
             loja: item.loja,
+            ds_imagem: item.produto.ds_imagem
+              ? `http://191.252.192.163:3333/api/produto/imagem/${item.produto.ds_imagem}`
+              : '',
             valor: item.valor,
             qt_estoque: item.qt_estoque,
           };

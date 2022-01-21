@@ -5,4 +5,5 @@ export default interface ICreateEstablishment {
   cidade: string;
   bairro: string;
   logradouro: string;
+  chave_mercado_pago: string;
 }

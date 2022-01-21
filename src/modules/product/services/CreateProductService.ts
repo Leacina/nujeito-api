@@ -10,6 +10,7 @@ interface IResquestProductShop {
   id_loja: number;
   valor: number;
   qt_estoque: number;
+  validade: string;
 }
 
 interface IRequestProduct {

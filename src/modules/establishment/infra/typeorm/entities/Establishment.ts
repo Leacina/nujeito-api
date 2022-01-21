@@ -31,6 +31,15 @@ class Establishment {
   @Column()
   logradouro: string;
 
+  @Column()
+  chave_mercado_pago: string;
+
+  @Column()
+  token_mercado_pago: string;
+
+  @Column()
+  taxa: number;
+
   @OneToMany(() => Shop, shop => shop.estabelecimento)
   lojas: Shop[];
 

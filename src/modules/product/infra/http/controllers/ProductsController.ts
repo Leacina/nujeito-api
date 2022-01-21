@@ -67,13 +67,14 @@ export default class ProductsController {
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    const { page, limit } = request.query;
+    const { page, limit, search } = request.query;
 
     const listProductsService = container.resolve(ListProductsService);
 
     const products = await listProductsService.execute({
       page: Number(page),
       pageSize: Number(limit) || 25,
+      search: String(search),
     });
 
     return response.json(products);

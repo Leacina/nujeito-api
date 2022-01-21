@@ -12,6 +12,9 @@ interface IRequest {
   cidade: string;
   bairro: string;
   logradouro: string;
+  chave_mercado_pago: string;
+  token_mercado_pago: string;
+  taxa: number;
   lojas: string[];
 }
 

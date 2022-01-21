@@ -1,8 +1,10 @@
+/* eslint-disable no-var */
 import { inject, injectable } from 'tsyringe';
 import * as yup from 'yup';
 import AppError from '@shared/errors/AppError';
 import IShopsRepository from '@modules/establishment/repositories/IShopsRepository';
 import IProductsShopsRepository from '@modules/product/repositories/IProductsShopsRepository';
+import ProductShop from '@modules/product/infra/typeorm/entities/ProductShop';
 import { ISalesItemsRepository } from '../repositories/ISalesItemsRepository';
 import { ISalesRepository } from '../repositories/ISalesRepository';
 import { ICreatetSalesItemsDTO } from '../dtos/ICreateSalesItemDTO';
@@ -13,8 +15,11 @@ interface IRequestSaleItem {
 }
 
 interface IResponse {
+  id: number;
   id_loja: number;
   id_usuario: number;
+  chave_mercado_pago: string;
+  token_mercado_pago: string;
   items: IRequestSaleItem[];
 }
 
@@ -74,6 +79,9 @@ export class CreateSaleService {
     const products: ICreatetSalesItemsDTO[] = [];
     let valor_total = 0;
 
+    // eslint-disable-next-line vars-on-top
+    var productsShop: ProductShop[];
+    productsShop = new Array<ProductShop>();
     // Busca todas as informações do item na loja
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < data.items.length; i++) {
@@ -96,12 +104,25 @@ export class CreateSaleService {
         valor_total: data.items[i].quantidade * product.valor,
         valor_unitario: product.valor,
       });
+
+      if (product.qt_estoque < data.items[i].quantidade) {
+        throw new AppError(
+          `Produto ${product.produto.nome} não possui quantidade disponível.`,
+          400,
+        );
+      }
+
+      product.qt_estoque -= data.items[i].quantidade;
+      productsShop.push(product);
     }
+
+    this.productsRepository.save(productsShop);
 
     const sale = await this.salesRepository.create({
       id_loja: data.id_loja,
       id_usuario: data.id_usuario,
       valor_total,
+      situacao: 'P',
     });
 
     const productsCreate = products.map(item => {
@@ -114,8 +135,11 @@ export class CreateSaleService {
     const salesItems = await this.salesItemsRepository.create(productsCreate);
 
     return {
+      id: sale.id,
       id_loja: sale.id_loja,
       id_usuario: sale.id_usuario,
+      chave_mercado_pago: shop.estabelecimento.chave_mercado_pago,
+      token_mercado_pago: shop.estabelecimento.token_mercado_pago,
       items: salesItems,
     };
   }
